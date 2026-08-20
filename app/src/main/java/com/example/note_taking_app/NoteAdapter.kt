@@ -11,20 +11,23 @@ class NoteAdapter(
     private val onDeleteClick: (Note) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
-    inner class NoteViewHolder(
+    class NoteViewHolder(
         private val binding: ItemNoteBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(note: Note) {
-
-            binding.tvNoteTitle.text = note.title
-            binding.tvNoteContent.text = note.content
+        fun bind(
+            note: Note,
+            onNoteClick: (Note) -> Unit,
+            onDeleteClick: (Note) -> Unit
+        ) {
+            binding.noteTitleTextView.text = note.title
+            binding.noteContentTextView.text = note.content
 
             binding.root.setOnClickListener {
                 onNoteClick(note)
             }
 
-            binding.btnDelete.setOnClickListener {
+            binding.deleteButton.setOnClickListener {
                 onDeleteClick(note)
             }
         }
@@ -48,7 +51,11 @@ class NoteAdapter(
         holder: NoteViewHolder,
         position: Int
     ) {
-        holder.bind(notes[position])
+        holder.bind(
+            notes[position],
+            onNoteClick,
+            onDeleteClick
+        )
     }
 
     override fun getItemCount(): Int {

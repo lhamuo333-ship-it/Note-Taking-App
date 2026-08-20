@@ -8,15 +8,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        // Load saved notes from SharedPreferences
+        NoteRepository.initialize(this)
 
         if (savedInstanceState == null) {
-
             supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    NoteListFragment()
-                )
+                .replace(android.R.id.content, NoteListFragment())
                 .commit()
         }
     }
